@@ -64,12 +64,7 @@
       <swiper-slide  *ngFor="let item of products.images ;let i=index">
         <img src="{{item}}" alt="" />
       </swiper-slide>
-      <!-- <swiper-slide>
-        <img src="../../../assets/product-slider/prod-slide2.png" alt="" />
-      </swiper-slide>
-      <swiper-slide>
-        <img src="../../../assets/product-slider/prod-slide3.png" alt="" />
-      </swiper-slide> -->
+    
     </swiper-container>
 
     <h1 class="item-name">{{products.title}}</h1>
@@ -112,21 +107,21 @@
   </div>
 
   <div class="variation">
-    <!-- <ion-segment (ionChange)="segmentChanged($event)" value="size">
+    <ion-segment (ionChange)="segmentChanged($event)" value="size">
       <ion-segment-button value="size">
         <ion-label>Select Size</ion-label>
       </ion-segment-button>
       <ion-segment-button value="color">
         <ion-label>Select Color</ion-label>
       </ion-segment-button>
-    </ion-segment> -->
+    </ion-segment>
   </div>
 
   <div class="seperator">
     <hr />
   </div>
 
-  <!-- <div class="variation-selector">
+  <div class="variation-selector">
     <div class="sizes" [class.active-variation]="activeVariation == 'size'">
       <div [class.active]="selectedSize == 1" (click)="changeSize(1)">
         S
@@ -140,9 +135,9 @@
       <div [class.active]="selectedSize == 4" (click)="changeSize(4)">
         XL
       </div>
-    </div> -->
+    </div> 
 
-  <!-- <div class="colors" [class.active-variation]="activeVariation == 'color'">
+  <div class="colors" [class.active-variation]="activeVariation == 'color'">
       <div [class.active]="selectedColor == 1" (click)="changeColor(1)">
         BLACK
       </div>
@@ -152,8 +147,8 @@
       <div [class.active]="selectedColor == 3" (click)="changeColor(3)">
         BLUE
       </div>
-    </div> -->
-  <!-- </div> -->
+    </div> 
+  </div>
 </ion-content>
 <ion-footer>
   <ion-row>

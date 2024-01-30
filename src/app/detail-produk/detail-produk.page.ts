@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Animation, AnimationController } from '@ionic/angular';
 import { RestApi } from 'src/provider/RestApi';
@@ -12,13 +12,22 @@ import { RestApi } from 'src/provider/RestApi';
 export class DetailProdukPage implements OnInit {
   productId: any;
   products: any = [];
+  selectedSize: any = '';
+  selectedColor: any = '';
+  activeVariation: any = '';
+
+  // @ViewChild('.colors', { read: ElementRef, static: false }) colors:any= ElementRef;
+  // @ViewChild('.sizes', { read: ElementRef, static: false }) sizes:any= ElementRef;
+  @ViewChild('.colors') colors: any = ElementRef;
+  @ViewChild('.sizes') sizes: any = ElementRef;
+
   constructor(
     private animatioCntrl: AnimationController,
     private route: ActivatedRoute,
     private api: RestApi,
     private http: HttpClient
   ) {
-    this.route.params.subscribe((params:any) => {
+    this.route.params.subscribe((params: any) => {
       // Mengambil nilai parameter 'id' dari URL
       let id = params['id'];
       console.log('Product ID:', id);
@@ -30,53 +39,56 @@ export class DetailProdukPage implements OnInit {
   }
 
   getProduct() {
-    this.http .get('https://dummyjson.com/products/1')
-      .subscribe((res:any) => {
-        console.log(res);
-        
-        this.products=res;
-      });
+    this.http.get('https://dummyjson.com/products/1').subscribe((res: any) => {
+      console.log(res);
+
+      this.products = res;
+    });
   }
   segmentChanged(e: any) {
-    // this.activeVariation = e.detail.value;
-    // if (this.activeVariation == 'color') {
-    //   this.animatioCntrl.create()
-    //   .addElement(document.querySelector('.sizes'))
-    //   .duration(500)
-    //   .iterations(1)
-    //   .fromTo('transform', 'translateX(0px)', 'translateX(100%)')
-    //   .fromTo('opacity', '1', '0.2')
-    //   .play();
-    //   this.animatioCntrl.create()
-    //   .addElement(document.querySelector('.colors'))
-    //   .duration(500)
-    //   .iterations(1)
-    //   .fromTo('transform', 'translateX(-100%)', 'translateX(0)')
-    //   .fromTo('opacity', '0.2', '1')
-    //   .play();
-    // } else {
-    //   this.animatioCntrl.create()
-    //   .addElement(document.querySelector('.sizes'))
-    //   .duration(500)
-    //   .iterations(1)
-    //   .fromTo('transform', 'translateX(100%)', 'translateX(0)')
-    //   .fromTo('opacity', '0.2', '1')
-    //   .play();
-    //   this.animatioCntrl.create()
-    //   .addElement(document.querySelector('.colors'))
-    //   .duration(500)
-    //   .iterations(1)
-    //   .fromTo('transform', 'translateX(0px)', 'translateX(-100%)')
-    //   .fromTo('opacity', '1', '0.2')
-    //   .play();
-    // }
+    this.activeVariation = e.detail.value;
+    if (this.activeVariation == 'color') {
+      this.animatioCntrl
+        .create()
+        .addElement(this.colors.nativeElement)
+        .duration(500)
+        .iterations(1)
+        .fromTo('transform', 'translateX(0px)', 'translateX(100%)')
+        .fromTo('opacity', '1', '0.2')
+        .play();
+      this.animatioCntrl
+        .create()
+        .addElement(this.colors.nativeElement)
+        .duration(500)
+        .iterations(1)
+        .fromTo('transform', 'translateX(-100%)', 'translateX(0)')
+        .fromTo('opacity', '0.2', '1')
+        .play();
+    } else {
+      this.animatioCntrl
+        .create()
+        .addElement(this.sizes.nativeElement)
+        .duration(500)
+        .iterations(1)
+        .fromTo('transform', 'translateX(100%)', 'translateX(0)')
+        .fromTo('opacity', '0.2', '1')
+        .play();
+      this.animatioCntrl
+        .create()
+        .addElement(this.colors.nativeElement)
+        .duration(500)
+        .iterations(1)
+        .fromTo('transform', 'translateX(0px)', 'translateX(-100%)')
+        .fromTo('opacity', '1', '0.2')
+        .play();
+    }
   }
 
   changeSize(size: number) {
-    // this.selectedSize = size;
+    this.selectedSize = size;
   }
 
   changeColor(color: number) {
-    // this.selectedColor = color;
+    this.selectedColor = color;
   }
 }
