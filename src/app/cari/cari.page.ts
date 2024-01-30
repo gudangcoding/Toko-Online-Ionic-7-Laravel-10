@@ -7,32 +7,62 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cari.page.scss'],
 })
 export class CariPage implements OnInit {
-
   apiUrl = 'https://dummyjson.com/products';
-  searchTerm: string = '';
-  products: any[] = [];
+  products: any = [];
   filteredProducts: any[] = [];
+  searchTerm: string = '';
 
-  constructor(private http:HttpClient) {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    // this.fetchProducts();
-    
+    this.applySearchFilter();
   }
   onSearchChange(event: any) {}
 
   fetchProducts() {
-    this.http.get<any[]>(this.apiUrl).subscribe((res:any)=>{
-      console.log(res.products);
-      
-        this.products = res.products;
-        this.filteredProducts = this.products;
-    });
+    this.http.get(this.apiUrl).subscribe(
+      (data: any) => {
+        // this.products = data.products;
+        // this.filteredProducts = this.products;
+        console.log(this.products);
+        if (this.searchTerm.trim() === '') {
+          console.log('keyword kosong');
+          this.products = data.products;
+          this.filteredProducts = this.products;
+          // return this.products; // Tampilkan semua produk jika tidak ada kata kunci pencarian
+        } else {
+          console.log('tampil semua data');
+           this.products.filter((product: any) =>
+            product.title.toLowerCase().includes(this.searchTerm.toLowerCase())
+          );
+        }
+      },
+      (error) => {
+        console.error('Error fetching data: ', error);
+      }
+    );
+  }
+
+  // filterProducts() {
+  //   this.filteredProducts = this.products.filter((product:any) =>
+  //     product.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+  //   );
+  // }
+
+  applySearchFilter() {
+    if (this.searchTerm.trim() === '') {
+      console.log('keyword kosong');
+      return this.products; // Tampilkan semua produk jika tidak ada kata kunci pencarian
+    } else {
+      console.log('tampil semua data');
+      return this.products.filter((product: any) =>
+        product.title.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    }
   }
 
   filterProducts() {
-    this.filteredProducts = this.products.filter((product:any) =>
-      product.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
+    this.fetchProducts();
+    // console.log('tes');
   }
 }

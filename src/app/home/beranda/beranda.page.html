@@ -23,6 +23,7 @@
 
 
   <ion-searchbar
+  placeholder="Cari Produk"
     [(ngModel)]="searchTerm"
     (click)="toSerach()"
   ></ion-searchbar>
@@ -33,7 +34,7 @@
     [loop]="true"
     pagination="true"
   >
-  
+
   <!-- cara pakai swiper js
   1. npm install swiper
 
@@ -67,7 +68,9 @@
       class="produk"
       size="6"
       *ngFor="let item of products ;let i=index"
-      routerLink="/product/product-details/{{item?.id}}"
+      
+      (click)="detail(item?.id)"
+   
     >
       <div>
         <ion-card class="ion-no-padding ion-no-margin">

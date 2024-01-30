@@ -1,7 +1,12 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button color="primary" class="backbtn" routerLink="/home" routerDirection="back">
+      <ion-button
+        color="primary"
+        class="backbtn"
+        routerLink="/home/beranda"
+        routerDirection="back"
+      >
         <img src="../../../assets/back-dark.svg" />
       </ion-button>
     </ion-buttons>
@@ -32,25 +37,57 @@
   </ion-slides> -->
 
   <div class="ion-padding-vertical">
-    <img src="../../assets/cart/cart1.png" alt="">
-    <h1 class="item-name">Black turtleneck top</h1>
+   
+    <swiper-container
+      effect="cube"
+      [slidesPerView]="3"
+      [loop]="true"
+      pagination="true"
+    >
+                            <!-- cara pakai swiper js
+                        1. npm install swiper
+
+                        2. jangan lupa tambahkan ini di beranda.module.ts
+
+                        import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+                        @NgModule({
+                          schemas: [..., CUSTOM_ELEMENTS_SCHEMA]
+                        });
+                        3. jangan lupa tambahkan ini di app.component.ts
+                        import { register } from 'swiper/element/bundle';
+                        register();
+
+                        @Component({
+                          ...
+                        })
+                        ... -->
+      <swiper-slide  *ngFor="let item of products.images ;let i=index">
+        <img src="{{item}}" alt="" />
+      </swiper-slide>
+      <!-- <swiper-slide>
+        <img src="../../../assets/product-slider/prod-slide2.png" alt="" />
+      </swiper-slide>
+      <swiper-slide>
+        <img src="../../../assets/product-slider/prod-slide3.png" alt="" />
+      </swiper-slide> -->
+    </swiper-container>
+
+    <h1 class="item-name">{{products.title}}</h1>
 
     <h4 class="price">
-      $42
-      <span class="real-price">$62</span>
+      {{products?.price | currency:'Rp '}}
+      <!-- <span class="real-price">Harga Diskon {{products?.price | currency:'Rp '}}</span> -->
     </h4>
   </div>
 
   <div class="seperator">
-    <hr>
+    <hr />
   </div>
 
   <div class="review">
     <ion-row>
       <ion-col size="6">
-        <div class="rating">
-          4.5
-        </div>
+        <div class="rating">4.5</div>
 
         Very Good
       </ion-col>
@@ -61,20 +98,17 @@
   </div>
 
   <div class="seperator">
-    <hr>
+    <hr />
   </div>
 
   <div class="description">
     <h5>Description</h5>
 
-    <p>
-      A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine.
-    </p>
-
+    <p>{{products.description}}</p>
   </div>
 
   <div class="seperator">
-    <hr>
+    <hr />
   </div>
 
   <div class="variation">
@@ -89,7 +123,7 @@
   </div>
 
   <div class="seperator">
-    <hr>
+    <hr />
   </div>
 
   <!-- <div class="variation-selector">
@@ -108,7 +142,7 @@
       </div>
     </div> -->
 
-    <!-- <div class="colors" [class.active-variation]="activeVariation == 'color'">
+  <!-- <div class="colors" [class.active-variation]="activeVariation == 'color'">
       <div [class.active]="selectedColor == 1" (click)="changeColor(1)">
         BLACK
       </div>

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { RestApi } from 'src/provider/RestApi';
 
 @Component({
@@ -9,8 +9,6 @@ import { RestApi } from 'src/provider/RestApi';
   styleUrls: ['./beranda.page.scss'],
 })
 export class BerandaPage implements OnInit {
- 
- 
   searchTerm: string = '';
   products: any[] = [];
   filteredProducts: any[] = [];
@@ -19,39 +17,22 @@ export class BerandaPage implements OnInit {
   constructor(
     private api: RestApi,
     private http: HttpClient,
-    private route:Router
-    ) {
+    private router: Router
+  ) {
     this.loadData(null);
   }
 
-  ngOnInit() {
-    
-  }
- 
-
-
-  applySearchFilter() {
-    if (this.searchTerm.trim() === '') {
-      return this.products; // Tampilkan semua produk jika tidak ada kata kunci pencarian
-    } else {
-      return this.products.filter((product) =>
-        product.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-      );
-    }
-  }
-
-  
+  ngOnInit() {}
 
   private apiUrl = 'https://simple-shop.app/api/v1/barang';
   getProduct(page: number) {
-    
-    let hasil = this.apiUrl+"?page="+page;
+    let hasil = this.apiUrl + '?page=' + page;
     // console.log(hasil);
     return this.http.get(`${this.apiUrl}?page=${page}`);
   }
 
-  loadData(event:any) {
-    console.log('Hasil Event : ',event);
+  loadData(event: any) {
+    // console.log('Hasil Event : ',event);
     this.getProduct(this.currentPage).subscribe((res: any) => {
       this.products = this.products.concat(res.data.data);
       if (event) {
@@ -66,8 +47,29 @@ export class BerandaPage implements OnInit {
       }
     });
   }
-  toSerach(){
-    this.route.navigateByUrl('cari');
+
+  toSerach() {
+    this.router.navigateByUrl('cari');
   }
-  
+
+  // detail(id: any) {
+  //   const navigationExtras: NavigationExtras = {
+  //     state: {
+  //       id: id,
+  //     },
+  //   };
+
+  //   this.router.navigate(['/detail-produk'], navigationExtras);
+  // }
+  detail(id:any) {
+    // this.helper.NavigasiParameter('DetailPage',id);
+    // // this.router.navigate(['/detail']);
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        id: id,
+      },
+    };
+    this.router.navigate(['/detail-produk'], navigationExtras);
+
+  }
 }
