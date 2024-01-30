@@ -16,8 +16,6 @@ export class DetailProdukPage implements OnInit {
   selectedColor: any = '';
   activeVariation: any = '';
 
-  // @ViewChild('.colors', { read: ElementRef, static: false }) colors:any= ElementRef;
-  // @ViewChild('.sizes', { read: ElementRef, static: false }) sizes:any= ElementRef;
   @ViewChild('.colors') colors: any = ElementRef;
   @ViewChild('.sizes') sizes: any = ElementRef;
 
@@ -41,10 +39,10 @@ export class DetailProdukPage implements OnInit {
   getProduct() {
     this.http.get('https://dummyjson.com/products/1').subscribe((res: any) => {
       console.log(res);
-
       this.products = res;
     });
   }
+
   segmentChanged(e: any) {
     this.activeVariation = e.detail.value;
     if (this.activeVariation == 'color') {
