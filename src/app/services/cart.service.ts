@@ -25,7 +25,7 @@ export class CartService {
     }
 
     localStorage.setItem(cartKey, JSON.stringify(cart));
-    localStorage.setItem('total', this.total);
+   
   }
 
   hapus(cartKey: any, productId: number): void {
@@ -46,6 +46,7 @@ export class CartService {
       }
     }
     localStorage.setItem(cartKey, JSON.stringify(cartData));
+    
   }
 
   clearCart(cartKey: any): void {
@@ -64,10 +65,11 @@ export class CartService {
     }
 
     localStorage.setItem(cartKey, JSON.stringify(cart));
-    localStorage.setItem('total', this.total);
+  
   }
 
   kurangi(cartKey: any, product: any): void {
+    
     const cart = this.getCart(cartKey);
     const existingProduct = cart.find((p) => p.id === product.id);
 
@@ -79,15 +81,10 @@ export class CartService {
     }
 
     localStorage.setItem(cartKey, JSON.stringify(cart));
+   
   }
 
-  updateTotal(cartKey: any): void {
-    this.total = this.products.reduce((acc: any, product: any) => {
-      return acc + (product.checked ? product.price * product.quantity : 0);
-    }, 0);
-
-    this.addToCart(cartKey, this.total);
-  }
+ 
 
   getTotalPrice(): number {
     const cartData = JSON.parse(localStorage.getItem('cart') ?? '{}');
@@ -95,6 +92,8 @@ export class CartService {
 
     for (const productId in cartData) {
       if (cartData.hasOwnProperty(productId) && cartData[productId].checked) {
+        console.log(cartData[productId]);
+        
         total += cartData[productId].price * cartData[productId].quantity;
       }
     }
@@ -102,13 +101,24 @@ export class CartService {
     return total;
   }
 
-  toggleCheckStatus(productId: number): void {
-    const cartData = JSON.parse(localStorage.getItem('shoppingCart') ?? '{}');
-
+  centangStatus(productId: number): void {
+    const cartData = JSON.parse(localStorage.getItem('cart') ?? '{}');
     if (cartData[productId]) {
       cartData[productId].checked = !cartData[productId].checked;
-      localStorage.setItem('shoppingCart', JSON.stringify(cartData));
+      localStorage.setItem('cart', JSON.stringify(cartData));
     }
   }
-  
+
+  hitungcentang(): number {
+    const cartData = JSON.parse(localStorage.getItem('cart') ?? '{}');
+    let count = 0;
+
+    for (const productId in cartData) {
+      if (cartData.hasOwnProperty(productId) && cartData[productId].checked) {
+        count += 1;
+      }
+    }
+
+    return count;
+  }
 }

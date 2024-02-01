@@ -9,44 +9,32 @@ import { CartService } from '../services/cart.service';
 })
 export class CartPage implements OnInit {
   products: any[] = [];
+  product: any = [];
   selectAll = false;
   total: any = 0;
 
   constructor(private cartService: CartService, private router: Router) {
     this.products = cartService.getCart('cart');
     this.total = this.cartService.getTotalPrice();
-    console.log('Total : ', this.products);
+    console.log('Total atas : ', this.total);
   }
 
   ngOnInit() {}
-
-  ionViewDidEnter() {
-    this.loadCart();
-    this.loadTotal();
-  }
 
   updateTotal() {
     this.total = this.cartService.getTotalPrice();
   }
 
-  // toggleSelectAll() {
-  //   this.cartService.toggleSelectAll(this.selectAll);
-  // }
-
   incrementProduct(product: any) {
     this.cartService.tambahi('cart', product);
-    this.updateTotal();
+    localStorage.getItem('cart');
+    localStorage.getItem('total');
   }
 
   decrementProduct(product: any) {
     this.cartService.kurangi('cart', product);
-    this.updateTotal();
-  }
-
-  loadCart() {
-    this.cartService.getCart('cart');
-    this.products = this.cartService.getCart('cart');
-    this.loadTotal();
+    localStorage.getItem('cart');
+    localStorage.getItem('total');
   }
 
   loadTotal() {
@@ -59,27 +47,38 @@ export class CartPage implements OnInit {
     this.cartService
       .getCart('cart')
       .forEach((product) => (product.checked = this.selectAll));
-    this.loadTotal();
-    
+
+    this.total = this.products.reduce((acc: any, product: any) => {
+      return acc + (product.checked ? product.price * product.quantity : 0);
+    }, 0);
+    console.log('total bawah : ', this.total);
+
+    localStorage.setItem('total', this.total);
+    localStorage.getItem('cart');
+    localStorage.getItem('total');
   }
 
   toggleCheckStatus(productId: number): void {
-    this.cartService.toggleCheckStatus(productId);
+    this.cartService.centangStatus(productId);
     this.loadTotal();
   }
 
   delAll() {
-    
     if (this.cartService.getCart('cart')) {
-      const jumlahdiceklis = this.cartService.getCart('cart').filter(item => item.checked).length;
-      console.log('JUmlah di ceklist : ',jumlahdiceklis);
-      
+      const jumlahdiceklis = this.cartService
+        .getCart('cart')
+        .filter((item) => this.product.checked).length;
+      console.log('JUmlah di ceklist : ', jumlahdiceklis);
+
       // Hapus berdasarkan produk yang di ceklis
-      // for (let i = jumlahdiceklis - 1; i >= 0; i--) {
-      //   this.cartService.getCart('cart').splice(i, 1);
-      // }
-      // // Update Storage
-      // localStorage.setItem('cart', JSON.stringify(this.cartService.getCart('cart')));
+      for (let i = jumlahdiceklis - 1; i >= 0; i--) {
+        this.cartService.getCart('cart').splice(i, 1);
+      }
+      // Update Storage
+      localStorage.setItem(
+        'cart',
+        JSON.stringify(this.cartService.getCart('cart'))
+      );
     }
   }
 }
