@@ -35,6 +35,10 @@ const routes: Routes = [
     path: 'cari',
     loadChildren: () => import('./cari/cari.module').then( m => m.CariPageModule)
   },
+  {
+    path: 'cart',
+    loadChildren: () => import('./cart/cart.module').then( m => m.CartPageModule)
+  },
 ];
 
 @NgModule({

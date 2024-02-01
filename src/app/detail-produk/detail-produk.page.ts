@@ -1,8 +1,10 @@
+// import { CartService } from 'src/app/cart.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Animation, AnimationController } from '@ionic/angular';
 import { RestApi } from 'src/provider/RestApi';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-detail-produk',
@@ -18,17 +20,21 @@ export class DetailProdukPage implements OnInit {
 
   @ViewChild('.colors') colors: any = ElementRef;
   @ViewChild('.sizes') sizes: any = ElementRef;
-
+  product: any;
   constructor(
     private animatioCntrl: AnimationController,
     private route: ActivatedRoute,
     private api: RestApi,
-    private http: HttpClient
+    private http: HttpClient,
+    private cart: CartService,
+    private router: Router,
+    private cartService : CartService
+
   ) {
-    this.route.params.subscribe((params: any) => {
-      // Mengambil nilai parameter 'id' dari URL
-      let id = params['id'];
-      console.log('Product ID:', id);
+    this.route.queryParams.subscribe((params: any) => {
+      this.productId = params.id;
+      console.log(this.productId);
+      
     });
   }
 
@@ -37,10 +43,33 @@ export class DetailProdukPage implements OnInit {
   }
 
   getProduct() {
-    this.http.get('https://dummyjson.com/products/1').subscribe((res: any) => {
+    this.http.get('https://dummyjson.com/products/'+this.productId).subscribe((res: any) => {
       console.log(res);
       this.products = res;
     });
+  }
+
+  addToCart() {
+    this.product = {
+      id: this.products.id,
+      name: this.products.title,
+      price: this.products.price,
+      gambar: this.products.thumbnail,
+    };
+    this.cartService.addToCart('cart',this.product);
+    // this.router.navigateByUrl('/home/cart');
+  }
+
+  buy() {
+    this.product = {
+      id: this.products.id,
+      name: this.products.title,
+      price: this.products.price,
+      gambar: this.products.thumbnail,
+      quantity: 1,
+    };
+    this.cartService.addToCart('cart',this.product);
+    this.router.navigateByUrl('/home/cart');
   }
 
   segmentChanged(e: any) {

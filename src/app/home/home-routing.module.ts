@@ -15,10 +15,10 @@ const routes: Routes = [
         path: 'whislist',
         loadChildren: () => import('./whislist/whislist.module').then( m => m.WhislistPageModule)
       },
-      {
-        path: 'cart',
-        loadChildren: () => import('./cart/cart.module').then( m => m.CartPageModule)
-      },
+      // {
+      //   path: 'cart',
+      //   loadChildren: () => import('./cart/cart.module').then( m => m.CartPageModule)
+      // },
       {
         path: 'history',
         loadChildren: () => import('./history/history.module').then( m => m.HistoryPageModule)
