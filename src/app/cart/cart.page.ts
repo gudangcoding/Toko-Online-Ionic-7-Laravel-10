@@ -15,70 +15,84 @@ export class CartPage implements OnInit {
 
   constructor(private cartService: CartService, private router: Router) {
     this.products = cartService.getCart('cart');
-    this.total = this.cartService.getTotalPrice();
+    this.total = cartService.getCart('total');
     console.log('Total atas : ', this.total);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.loadTotal();
+  }
 
   updateTotal() {
-    this.total = this.cartService.getTotalPrice();
+    localStorage.getItem('cart');
+    localStorage.getItem('total');
   }
 
   incrementProduct(product: any) {
     this.cartService.tambahi('cart', product);
-    localStorage.getItem('cart');
-    localStorage.getItem('total');
+    this.loadTotal();
   }
 
   decrementProduct(product: any) {
     this.cartService.kurangi('cart', product);
-    localStorage.getItem('cart');
-    localStorage.getItem('total');
+    this.loadTotal();
   }
 
   loadTotal() {
-    this.total = this.cartService.getTotalPrice();
+    this.cartService.getCart('cart');
+    this.cartService.getCart('total');
   }
 
   checkAll() {
-    this.cartService.getTotalPrice();
+    this.cartService.TotalHarga();
+    this.cartService.TotalQty();
     this.products.forEach((item: any) => (item.checked = this.selectAll));
     this.cartService
       .getCart('cart')
       .forEach((product) => (product.checked = this.selectAll));
 
-    this.total = this.products.reduce((acc: any, product: any) => {
-      return acc + (product.checked ? product.price * product.quantity : 0);
+    this.total = this.products.reduce((sum: any, product: any) => {
+      return sum + (product.checked ? product.price * product.quantity : 0);
     }, 0);
     console.log('total bawah : ', this.total);
 
     localStorage.setItem('total', this.total);
-    localStorage.getItem('cart');
-    localStorage.getItem('total');
+   this.loadTotal();
   }
 
-  toggleCheckStatus(productId: number): void {
+  centangsatuan(productId: number): void {
+   
+  
     this.cartService.centangStatus(productId);
-    this.loadTotal();
+   
+    // const cartData = JSON.parse(localStorage.getItem('cart') ?? '{}');
+    // console.log(cartData);
+    // // if (cartData[productId]) {
+    //   for (let index = 0; index < cartData[productId].checked; index++) {
+    //     this.total += cartData[index].price * cartData[index].quantity; 
+    //   }
+    //   console.log('Hasil Tes ',cartData[productId].name);
+    //   localStorage.setItem('cart', JSON.stringify(cartData));
+    //   localStorage.setItem('total', JSON.stringify(this.total));
+    // // }
   }
 
   delAll() {
-    if (this.cartService.getCart('cart')) {
-      const jumlahdiceklis = this.cartService
-        .getCart('cart')
-        .filter((item) => this.product.checked).length;
-      console.log('JUmlah di ceklist : ', jumlahdiceklis);
-
+    if (this.products) {
+      const jumlahdiceklis = this.products.filter(item => item.checked).length;
+      console.log(jumlahdiceklis);
       // Hapus berdasarkan produk yang di ceklis
       for (let i = jumlahdiceklis - 1; i >= 0; i--) {
-        this.cartService.getCart('cart').splice(i, 1);
+        this.products.splice(i, 1);
       }
       // Update Storage
-      localStorage.setItem(
-        'cart',
-        JSON.stringify(this.cartService.getCart('cart'))
-      );
+      localStorage.setItem('cart', JSON.stringify(this.products));
     }
   }
+
+  calculateTotal() {
+    this.total = this.products.reduce((sum, product) => sum + product.price * product.quantity, 0);
+  }
+ 
+
 }

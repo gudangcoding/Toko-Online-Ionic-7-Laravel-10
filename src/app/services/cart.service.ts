@@ -1,9 +1,16 @@
 import { Injectable } from '@angular/core';
+import { NavigationExtras } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
+  public cart: any[] = [];
+  public totalPrice: any = 0;
+  public totalItem: any;
+  public grandTotal: any = 0;
+  public itemId: any[] = [];
+
   cartKey: any = '';
   products: any = [];
   total: any = 0;
@@ -25,7 +32,6 @@ export class CartService {
     }
 
     localStorage.setItem(cartKey, JSON.stringify(cart));
-   
   }
 
   hapus(cartKey: any, productId: number): void {
@@ -46,7 +52,6 @@ export class CartService {
       }
     }
     localStorage.setItem(cartKey, JSON.stringify(cartData));
-    
   }
 
   clearCart(cartKey: any): void {
@@ -65,11 +70,9 @@ export class CartService {
     }
 
     localStorage.setItem(cartKey, JSON.stringify(cart));
-  
   }
 
   kurangi(cartKey: any, product: any): void {
-    
     const cart = this.getCart(cartKey);
     const existingProduct = cart.find((p) => p.id === product.id);
 
@@ -81,19 +84,16 @@ export class CartService {
     }
 
     localStorage.setItem(cartKey, JSON.stringify(cart));
-   
   }
 
- 
-
-  getTotalPrice(): number {
+  TotalHarga(): number {
     const cartData = JSON.parse(localStorage.getItem('cart') ?? '{}');
     let total = 0;
 
     for (const productId in cartData) {
       if (cartData.hasOwnProperty(productId) && cartData[productId].checked) {
         console.log(cartData[productId]);
-        
+
         total += cartData[productId].price * cartData[productId].quantity;
       }
     }
@@ -101,12 +101,40 @@ export class CartService {
     return total;
   }
 
-  centangStatus(productId: number): void {
+  TotalQty(): number {
     const cartData = JSON.parse(localStorage.getItem('cart') ?? '{}');
-    if (cartData[productId]) {
-      cartData[productId].checked = !cartData[productId].checked;
-      localStorage.setItem('cart', JSON.stringify(cartData));
+    let total = 0;
+
+    for (const productId in cartData) {
+      if (cartData.hasOwnProperty(productId) && cartData[productId].checked) {
+        console.log(cartData[productId]);
+
+        total += cartData[productId].quantity;
+      }
     }
+
+    return total;
+  }
+
+  centangStatus(productId: number): void {
+    
+    const cartData = JSON.parse(localStorage.getItem('cart') ?? '{}');
+   
+    this.total = 0;
+    if (cartData[productId]) {
+      cartData[productId].checked = !cartData[productId].checked;    
+      // for (let index = 0; index < cartData[productId].checked.length; index++) {
+      for (let index = 0; index < cartData[productId].checked; index++) {
+        this.total += cartData[index].price * cartData[index].quantity;
+        
+        
+      }
+      console.log(cartData[productId].name);
+      localStorage.setItem('cart', JSON.stringify(cartData));
+      localStorage.setItem('total', JSON.stringify(this.total));
+    }
+    // console.log(this.total);
+    
   }
 
   hitungcentang(): number {
@@ -120,5 +148,13 @@ export class CartService {
     }
 
     return count;
+  }
+
+  checkout() {
+    const param: NavigationExtras = {
+      queryParams: {
+        from: 'cart',
+      },
+    };
   }
 }
