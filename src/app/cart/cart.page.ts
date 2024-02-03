@@ -24,13 +24,14 @@ export class CartPage implements OnInit {
   ) {
     this.products = cartService.getCart('cart');
     this.total = cartService.getCart('total');
-
+    this.total = cartService.getCart('qty');
     console.log('Total atas : ', this.total);
   }
 
   ngOnInit() {
     this.products = this.cartService.getCart('cart');
     this.total = this.cartService.getCart('total');
+    this.qty = this.cartService.getCart('qty');
   }
 
   updateTotal() {
@@ -51,11 +52,10 @@ export class CartPage implements OnInit {
   loadTotal() {
     this.products = this.cartService.getCart('cart');
     this.total = this.cartService.getCart('total');
-    this.total = this.cartService.getCart('qty');
+    this.qty = this.cartService.getCart('qty');
   }
 
-  calculate(){
-   
+  calculate(){  
     if (this.products) {
       this.checkedCount = this.products.filter((item) => item.checked).length;
       // Hapus berdasarkan produk yang di ceklis
