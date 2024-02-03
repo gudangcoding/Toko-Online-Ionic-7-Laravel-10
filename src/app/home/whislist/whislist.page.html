@@ -27,7 +27,7 @@
   ></ion-searchbar>
 
   <div *ngIf="searchTerm === '' ">
-    <ion-row *ngFor="let product of products;let i=index;">
+    <ion-row *ngFor="let product of whistlist;let i=index;"  (click)="detail(product?.id)">
       <ion-col size="3">
         <img [src]="product.gambar" alt="{{ product.name }}" />
       </ion-col>
@@ -41,7 +41,7 @@
   </div>
 
   <div *ngIf="searchTerm !== '' && hasil.length > 0 ">
-    <ion-row *ngFor="let product of hasil;let i=index;">
+    <ion-row *ngFor="let product of hasil;let i=index;" (click)="detail(product?.id)">
       <ion-col size="3">
         <img [src]="product.gambar" alt="{{ product.name }}" />
       </ion-col>
