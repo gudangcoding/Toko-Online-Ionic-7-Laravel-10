@@ -42,21 +42,7 @@ export class CartService {
     }
   }
 
-  hapusbyID() {
-    const cartKey = 'cart';
-    const cartData = JSON.parse(localStorage.getItem(cartKey) ?? '{}');
 
-    for (const productId in cartData) {
-      if (cartData.hasOwnProperty(productId) && cartData[productId].checked) {
-        delete cartData[productId];
-      }
-    }
-    localStorage.setItem(cartKey, JSON.stringify(cartData));
-  }
-
-  clearCart(cartKey: any): void {
-    localStorage.removeItem(cartKey);
-  }
 
   tambahi(cartKey: any, product: any) {
     const cart = this.getCart(cartKey);
@@ -70,6 +56,7 @@ export class CartService {
     }
 
     localStorage.setItem(cartKey, JSON.stringify(cart));
+
   }
 
   kurangi(cartKey: any, product: any): void {
@@ -86,35 +73,7 @@ export class CartService {
     localStorage.setItem(cartKey, JSON.stringify(cart));
   }
 
-  TotalHarga(): number {
-    const cartData = JSON.parse(localStorage.getItem('cart') ?? '{}');
-    let total = 0;
-
-    for (const productId in cartData) {
-      if (cartData.hasOwnProperty(productId) && cartData[productId].checked) {
-        console.log(cartData[productId]);
-
-        total += cartData[productId].price * cartData[productId].quantity;
-      }
-    }
-
-    return total;
-  }
-
-  TotalQty(): number {
-    const cartData = JSON.parse(localStorage.getItem('cart') ?? '{}');
-    let total = 0;
-
-    for (const productId in cartData) {
-      if (cartData.hasOwnProperty(productId) && cartData[productId].checked) {
-        console.log(cartData[productId]);
-
-        total += cartData[productId].quantity;
-      }
-    }
-
-    return total;
-  }
+  
 
   centangStatus(productId: number): void {
     

@@ -55,7 +55,6 @@ export class DetailProdukPage implements OnInit {
       name: this.products.title,
       price: this.products.price,
       gambar: this.products.thumbnail,
-      checked: false,
     };
     this.cartService.addToCart('cart',this.product);
     // this.router.navigateByUrl('/home/cart');
