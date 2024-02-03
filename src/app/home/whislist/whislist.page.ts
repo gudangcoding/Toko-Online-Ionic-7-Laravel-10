@@ -11,7 +11,7 @@ import { Helper } from 'src/provider/Helper';
 export class WhislistPage implements OnInit {
   products: any[] = [];
   hasil: any[] = [];
-  searchTerm:any;
+  searchTerm:any="";
 
   constructor(private cartService: CartService, private router: Router,private util:Helper) {
     this.products = cartService.getCart('cart');

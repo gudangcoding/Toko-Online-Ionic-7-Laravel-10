@@ -26,7 +26,7 @@
     (ionChange)="searchByName(searchTerm)"
   ></ion-searchbar>
 
-  <div *ngIf="products.length > 0 && searchTerm === '' ">
+  <div *ngIf="searchTerm === '' ">
     <ion-row *ngFor="let product of products;let i=index;">
       <ion-col size="3">
         <img [src]="product.gambar" alt="{{ product.name }}" />
@@ -40,8 +40,8 @@
     </ion-row>
   </div>
 
-  <div *ngIf="hasil.length > 0 && searchTerm !== ''">
-    <ion-row *ngFor="let product of products;let i=index;">
+  <div *ngIf="searchTerm !== '' && hasil.length > 0 ">
+    <ion-row *ngFor="let product of hasil;let i=index;">
       <ion-col size="3">
         <img [src]="product.gambar" alt="{{ product.name }}" />
       </ion-col>
