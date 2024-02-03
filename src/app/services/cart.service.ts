@@ -14,6 +14,7 @@ export class CartService {
   cartKey: any = '';
   products: any = [];
   total: any = 0;
+  qty: any = 0;
 
   getCart(cartKey: any): any[] {
     const cartData = localStorage.getItem(cartKey);

@@ -41,12 +41,11 @@ export class CartPage implements OnInit {
   }
 
   loadTotal() {
-    this.cartService.getCart('cart');
-    this.cartService.getCart('total');
+    this.products = this.cartService.getCart('cart');
+    this.total = this.cartService.getCart('total');
   }
 
   checkAll() {
-   
     this.products.forEach((item: any) => (item.checked = this.selectAll));
     this.cartService
       .getCart('cart')
@@ -56,11 +55,12 @@ export class CartPage implements OnInit {
       return sum + (product.checked ? product.price * product.quantity : 0);
     }, 0);
     this.qty = this.products.reduce((sum: any, product: any) => {
-      return sum +  product.quantity ;
+      return sum + (product.checked ? product.quantity : 0);
     }, 0);
     console.log('total bawah : ', this.total);
 
     localStorage.setItem('total', this.total);
+    localStorage.setItem('qty', this.qty);
     this.loadTotal();
   }
 
@@ -106,7 +106,7 @@ export class CartPage implements OnInit {
       for (let index = 0; index < cartData[productId].checked; index++) {
         this.total += cartData[index].price * cartData[index].quantity;
       }
-      console.log('Hasil Tes ',cartData[productId].name);
+      console.log('Hasil Tes ', cartData[productId].name);
       localStorage.setItem('cart', JSON.stringify(cartData));
       localStorage.setItem('total', JSON.stringify(this.total));
     }
@@ -123,8 +123,14 @@ export class CartPage implements OnInit {
       // Hapus berdasarkan produk yang di ceklis
       for (let i = jumlahdiceklis - 1; i >= 0; i--) {
         this.products.splice(i, 1);
-        this.total = this.products.reduce( (sum, product) => sum + product.price * product.quantity,  0);
-        this.qty = this.products.reduce( (sum, product) => sum + product.quantity,  0);
+        this.total = this.products.reduce(
+          (sum, product) => sum + product.price * product.quantity,
+          0
+        );
+        this.qty = this.products.reduce(
+          (sum, product) => sum + product.quantity,
+          0
+        );
       }
       // Update Storage
       localStorage.setItem('cart', JSON.stringify(this.products));
@@ -134,20 +140,28 @@ export class CartPage implements OnInit {
 
   diceklis() {
     if (this.products) {
-      const jumlahdiceklis = this.products.filter( (item) => item.checked).length;
+      const jumlahdiceklis = this.products.filter(
+        (item) => item.checked
+      ).length;
       console.log(jumlahdiceklis);
       // Hapus berdasarkan produk yang di ceklis
-      for (let i = 0; i <= jumlahdiceklis; i++) {
+      for (let i = 1; i <= jumlahdiceklis; i++) {
         // this.products.splice(i, 1);
         this.total = this.products.reduce((sum: any, product: any) => {
           return sum + (product.checked ? product.price * product.quantity : 0);
         }, 0);
         this.qty = this.products.reduce((sum: any, product: any) => {
-          return sum +  (product.checked ?  product.quantity : 0);
+          return sum + (product.checked ? product.quantity : 0);
         }, 0);
-       
       }
-      console.log('JUmlah Diceklis '+ jumlahdiceklis +' Jumlah '+this.qty+' Totalnya '+this.total);
+      console.log(
+        'JUmlah Diceklis ' +
+          jumlahdiceklis +
+          ' Jumlah ' +
+          this.qty +
+          ' Totalnya ' +
+          this.total
+      );
       // Update Storage
       // this.total = {
       //   totalharga: this.total,
@@ -156,26 +170,27 @@ export class CartPage implements OnInit {
       localStorage.setItem('cart', JSON.stringify(this.products));
       localStorage.setItem('total', JSON.stringify(this.total));
     }
-
-    
   }
 
-  hapussatuan(){
+  hapussatuan() {
     if (this.products) {
-      const produkDiceklis = this.products.filter(item => item.checked);
+      const produkDiceklis = this.products.filter((item) => item.checked);
       // Menghitung total harga dan jumlah kuantitas dari produk yang dicentang
-      this.total = produkDiceklis.reduce((sum, product) => sum + product.price * product.quantity, 0);
-      this.qty = produkDiceklis.reduce((sum, product) => sum + product.quantity, 0);
-  
+      this.total = produkDiceklis.reduce(
+        (sum, product) => sum + product.price * product.quantity,
+        0
+      );
+      this.qty = produkDiceklis.reduce(
+        (sum, product) => sum + product.quantity,
+        0
+      );
+
       // Hapus produk yang dicentang dari this.products
-      this.products = this.products.filter(item => !item.checked);
-  
+      this.products = this.products.filter((item) => !item.checked);
+
       console.log('Ini Total : ', this.total);
     }
   }
-
-
-
 
   deleteItemById(itemId: number) {
     if (this.products) {
