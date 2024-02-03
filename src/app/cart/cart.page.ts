@@ -105,10 +105,12 @@ export class CartPage implements OnInit {
     if (ketemu) {
       for (let index = 0; index < cartData[productId].checked; index++) {
         this.total += cartData[index].price * cartData[index].quantity;
+        this.qty +=  cartData[index].quantity;
       }
       console.log('Hasil Tes ', cartData[productId].name);
       localStorage.setItem('cart', JSON.stringify(cartData));
       localStorage.setItem('total', JSON.stringify(this.total));
+      localStorage.setItem('qty', JSON.stringify(this.qty));
     }
     // console.log(this.total);
     // const checkbox = document.getElementById('yourCheckboxId');
