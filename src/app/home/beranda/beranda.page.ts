@@ -24,7 +24,7 @@ export class BerandaPage implements OnInit {
 
   ngOnInit() {}
 
-  private apiUrl = 'https://simple-shop.app/api/v1/barang';
+  private apiUrl = 'https://dummyjson.com/products';
   getProduct(page: number) {
     let hasil = this.apiUrl + '?page=' + page;
     // console.log(hasil);
@@ -34,13 +34,13 @@ export class BerandaPage implements OnInit {
   loadData(event: any) {
     // console.log('Hasil Event : ',event);
     this.getProduct(this.currentPage).subscribe((res: any) => {
-      this.products = this.products.concat(res.data.data);
+      this.products = this.products.concat(res.products);
       if (event) {
         event.target.complete();
       }
       this.currentPage++;
 
-      if (res.page === res.total_pages) {
+      if (res.page === res.total) {
         if (event) {
           event.target.disabled = true;
         }

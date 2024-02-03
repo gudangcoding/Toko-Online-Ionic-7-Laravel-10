@@ -74,10 +74,10 @@
     >
       <div>
         <ion-card class="ion-no-padding ion-no-margin">
-          <img src="https://simple-shop.app/uploads/{{item?.gambar}}" alt="" width="300" height="200"/>
-          <p class="productTitle">{{item?.nama_barang}}</p>
+          <img src="{{item?.thumbnail}}" alt="" width="300" height="200"/>
+          <p class="productTitle">{{item?.title}}</p>
           <div class="box">
-            <p>{{item?.harga | currency:'Rp '}}</p>
+            <p>{{item?.price | currency:'Rp '}}</p>
           </div>
         </ion-card>
       </div>

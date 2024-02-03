@@ -54,6 +54,7 @@ export class CartPage implements OnInit {
     this.total = this.products.reduce((sum: any, product: any) => {
       return sum + (product.checked ? product.price * product.quantity : 0);
     }, 0);
+
     this.qty = this.products.reduce((sum: any, product: any) => {
       return sum + (product.checked ? product.quantity : 0);
     }, 0);
@@ -61,43 +62,10 @@ export class CartPage implements OnInit {
 
     localStorage.setItem('total', this.total);
     localStorage.setItem('qty', this.qty);
-    this.loadTotal();
   }
 
   centangsatuan(productId: number): void {
-    // const cartData = JSON.parse(localStorage.getItem('cart') ?? '{}');
-
-    // // Menggunakan Object.values() untuk mendapatkan nilai-nilai dari objek
-    // const values = Object.values(cartData);
-
-    // // Menggunakan filter() untuk menyaring nilai-nilai yang true
-    // const trueValues = values.filter((value) => value === false);
-
-    // // Menghitung jumlah kolom yang true
-    // const jumlahKolomTrue = trueValues.length;
-
-    // console.log(trueValues);
-    // this.cartService.centangStatus(productId);
-
-    // const cartData = JSON.parse(localStorage.getItem('cart') ?? '{}');
-    // const ketemu = cartData.findIndex((item: any) => item.id === productId);
-    // cartData.forEach((hasil: any) => {
-    //  console.log(hasil.length);
-
-    // if (ketemu) {
-    // this.total += hasil.price * hasil.quantity;
-    // if (hasil.checked==false) {
-
-    // }
-    // for (let index = 0; index < cartData[productId].checked; index++) {
-    //   this.total += cartData[index].price * cartData[index].quantity;
-    // }
-    // console.log('Hasil Tes ', cartData[productId].name);
-    // localStorage.setItem('cart', JSON.stringify(cartData));
-    // localStorage.setItem('total', JSON.stringify(this.total));
-    // }
-    // });
-
+   
     const cartData = JSON.parse(localStorage.getItem('cart') ?? '{}');
     const ketemu = cartData.findIndex((item: any) => item.id === productId);
 
@@ -166,11 +134,12 @@ export class CartPage implements OnInit {
       );
       // Update Storage
       // this.total = {
-      //   totalharga: this.total,
-      //   totalqty: this.qty,
+      //   total: this.total,
+      //   qty: this.qty,
       // };
       localStorage.setItem('cart', JSON.stringify(this.products));
       localStorage.setItem('total', JSON.stringify(this.total));
+      localStorage.setItem('qty', JSON.stringify(this.qty));
     }
   }
 
