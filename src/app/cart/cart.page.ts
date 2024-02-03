@@ -55,11 +55,12 @@ export class CartPage implements OnInit {
   }
 
   calculate(){
-    this.loadTotal();
+   
     if (this.products) {
       this.checkedCount = this.products.filter((item) => item.checked).length;
       // Hapus berdasarkan produk yang di ceklis
       for (let i = 0; i <= this.checkedCount + 1; i++) {
+        this.loadTotal();
         // this.products.splice(i, 1);
         this.total = this.products.reduce((sum: any, product: any) => {
           return sum + (product.checked ? product.price * product.quantity : 0);
