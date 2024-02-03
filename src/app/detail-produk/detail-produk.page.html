@@ -37,14 +37,14 @@
   </ion-slides> -->
 
   <div class="ion-padding-vertical">
-   
-    <swiper-container
-      effect="cube"
-      [slidesPerView]="3"
-      [loop]="true"
-      pagination="true"
-    >
-                            <!-- cara pakai swiper js
+    <div class="product-container">
+      <swiper-container
+        effect="cube"
+        [slidesPerView]="3"
+        [loop]="true"
+        pagination="true"
+      >
+        <!-- cara pakai swiper js
                         1. npm install swiper
 
                         2. jangan lupa tambahkan ini di beranda.module.ts
@@ -61,18 +61,32 @@
                           ...
                         })
                         ... -->
-      <swiper-slide  *ngFor="let item of products.images ;let i=index">
-        <img src="{{item}}" alt="" width="500" height="300"/>
-      </swiper-slide>
+        <swiper-slide *ngFor="let item of products.images ;let i=index">
+          <img src="{{item}}" alt="" width="500" height="300" />
+        </swiper-slide>
+      </swiper-container>
+
+      <div class="product-info">
+        <div class="satu">
+          <h1 class="item-name">{{products.title}}</h1>
+          <h4 class="price">
+            {{products?.price | currency:'Rp '}}
+            <!-- <span class="real-price">Harga Diskon {{products?.price | currency:'Rp '}}</span> -->
+          </h4>
+        </div>
+
+        <div class="dua">
+          <ion-icon
+          name="heart"
+          class="wishlist-icon"
+          [ngClass]="{'wishlist-added': isWishlistAdded}"
+          (click)="addToWishlist(products.id)"
+        ></ion-icon>
+        </div>
+      </div>
+    </div>
+
     
-    </swiper-container>
-
-    <h1 class="item-name">{{products.title}}</h1>
-
-    <h4 class="price">
-      {{products?.price | currency:'Rp '}}
-      <!-- <span class="real-price">Harga Diskon {{products?.price | currency:'Rp '}}</span> -->
-    </h4>
   </div>
 
   <div class="seperator">
@@ -123,21 +137,13 @@
 
   <div class="variation-selector">
     <div class="sizes" [class.active-variation]="activeVariation == 'size'">
-      <div [class.active]="selectedSize == 1" (click)="changeSize(1)">
-        S
-      </div>
-      <div [class.active]="selectedSize == 2" (click)="changeSize(2)">
-        M
-      </div>
-      <div [class.active]="selectedSize == 3" (click)="changeSize(3)">
-        L
-      </div>
-      <div [class.active]="selectedSize == 4" (click)="changeSize(4)">
-        XL
-      </div>
-    </div> 
+      <div [class.active]="selectedSize == 1" (click)="changeSize(1)">S</div>
+      <div [class.active]="selectedSize == 2" (click)="changeSize(2)">M</div>
+      <div [class.active]="selectedSize == 3" (click)="changeSize(3)">L</div>
+      <div [class.active]="selectedSize == 4" (click)="changeSize(4)">XL</div>
+    </div>
 
-  <div class="colors" [class.active-variation]="activeVariation == 'color'">
+    <div class="colors" [class.active-variation]="activeVariation == 'color'">
       <div [class.active]="selectedColor == 1" (click)="changeColor(1)">
         BLACK
       </div>
@@ -147,16 +153,20 @@
       <div [class.active]="selectedColor == 3" (click)="changeColor(3)">
         BLUE
       </div>
-    </div> 
+    </div>
   </div>
 </ion-content>
 <ion-footer>
   <ion-row>
     <ion-col size="6">
-      <ion-button expand="full" color="light" (click)="addToCart()">Keranjang</ion-button>
+      <ion-button expand="full" color="light" (click)="addToCart()"
+        >Keranjang</ion-button
+      >
     </ion-col>
     <ion-col size="6">
-      <ion-button expand="full" color="success" (click)="addToCart()">Beli</ion-button>
+      <ion-button expand="full" color="success" (click)="addToCart()"
+        >Beli</ion-button
+      >
     </ion-col>
   </ion-row>
 </ion-footer>

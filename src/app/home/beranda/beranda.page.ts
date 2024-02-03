@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
+import { Helper } from 'src/provider/Helper';
 import { RestApi } from 'src/provider/RestApi';
 
 @Component({
@@ -17,7 +18,8 @@ export class BerandaPage implements OnInit {
   constructor(
     private api: RestApi,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private util : Helper
   ) {
     this.loadData(null);
   }
@@ -32,8 +34,10 @@ export class BerandaPage implements OnInit {
   }
 
   loadData(event: any) {
+    this.util.showLoading();
     // console.log('Hasil Event : ',event);
     this.getProduct(this.currentPage).subscribe((res: any) => {
+      this.util.dismissLoading();
       this.products = this.products.concat(res.products);
       if (event) {
         event.target.complete();
@@ -48,22 +52,18 @@ export class BerandaPage implements OnInit {
     });
   }
 
-  toSerach() {
-    this.router.navigateByUrl('cari');
+  toSerach(cari:any) {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        cari: cari,
+      },
+    };
+    this.router.navigate(['/cari'], navigationExtras);
+   
   }
 
-  // detail(id: any) {
-  //   const navigationExtras: NavigationExtras = {
-  //     state: {
-  //       id: id,
-  //     },
-  //   };
-
-  //   this.router.navigate(['/detail-produk'], navigationExtras);
-  // }
   detail(id:any) {
-    // this.helper.NavigasiParameter('DetailPage',id);
-    // // this.router.navigate(['/detail']);
+
     let navigationExtras: NavigationExtras = {
       queryParams: {
         id: id,

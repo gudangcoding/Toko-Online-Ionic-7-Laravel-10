@@ -11,12 +11,13 @@ import { RestApi } from 'src/provider/RestApi';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { StorageService } from './services/storage.service';
 import { CartService } from './services/cart.service';
+import { Helper } from 'src/provider/Helper';
 
 @NgModule({
   declarations: [AppComponent],
  
   imports: [ HttpClientModule,BrowserModule, IonicModule.forRoot(),IonicStorageModule.forRoot(), AppRoutingModule],
-  providers: [RestApi,StorageService,CartService,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [RestApi,StorageService,CartService,Helper,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

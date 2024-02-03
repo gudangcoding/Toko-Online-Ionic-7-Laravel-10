@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartService } from '../services/cart.service';
+import { Helper } from 'src/provider/Helper';
 
 @Component({
   selector: 'app-cart',
@@ -14,9 +15,10 @@ export class CartPage implements OnInit {
   total: any = 0;
   qty: any = 0;
 
-  constructor(private cartService: CartService, private router: Router) {
+  constructor(private cartService: CartService, private router: Router,private util:Helper) {
     this.products = cartService.getCart('cart');
     this.total = cartService.getCart('total');
+    
     console.log('Total atas : ', this.total);
   }
 

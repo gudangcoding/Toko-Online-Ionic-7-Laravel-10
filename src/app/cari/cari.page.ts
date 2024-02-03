@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'app-cari',
@@ -12,12 +13,36 @@ export class CariPage implements OnInit {
   filteredProducts: any[] = [];
   searchTerm: string = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private router:Router, private route: ActivatedRoute) {
+    this.route.queryParams.subscribe((params: any) => {
+      this.searchTerm = params.cari;
+      console.log(this.searchTerm);
+    });
+  }
 
   ngOnInit() {
     this.applySearchFilter();
   }
-  onSearchChange(event: any) {}
+
+  onSearchChange(event: any) {
+    this.http
+      .get('https://dummyjson.com/products/search?q=' + event)
+      .subscribe((res: any) => {
+        console.log(res.products);
+        this.products = res.products;
+      });
+  }
+
+  detail(id:any) {
+
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        id: id,
+      },
+    };
+    this.router.navigate(['/detail-produk'], navigationExtras);
+
+  }
 
   fetchProducts() {
     this.http.get(this.apiUrl).subscribe(
@@ -32,7 +57,7 @@ export class CariPage implements OnInit {
           // return this.products; // Tampilkan semua produk jika tidak ada kata kunci pencarian
         } else {
           console.log('tampil semua data');
-           this.products.filter((product: any) =>
+          this.products.filter((product: any) =>
             product.title.toLowerCase().includes(this.searchTerm.toLowerCase())
           );
         }

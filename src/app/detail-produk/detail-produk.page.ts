@@ -49,6 +49,31 @@ export class DetailProdukPage implements OnInit {
     });
   }
 
+  isWishlistAdded: boolean = false;
+  addToWishlist(productid:number){
+    this.isWishlistAdded = !this.isWishlistAdded;
+    console.log(this.isWishlistAdded);
+    if (this.isWishlistAdded==true) {
+      this.product = {
+        id: this.products.id,
+        name: this.products.title,
+        price: this.products.price,
+        gambar: this.products.thumbnail,
+      };
+      this.cartService.addToCart('whistlist',this.product);
+    }else{
+        this.removeProduct(productid);
+    }
+    
+  }
+
+  removeProduct(productId: number) {
+    const products =  JSON.parse(localStorage.getItem('whistlist') ?? '{}');
+    const ketemu = products.filter((product: any) => product.id !== productId);
+    console.log('ketemu : ',ketemu);
+    localStorage.setItem('whistlist', ketemu);
+  }
+
   addToCart() {
     this.product = {
       id: this.products.id,
