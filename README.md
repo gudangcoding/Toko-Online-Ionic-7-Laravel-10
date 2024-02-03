@@ -8,6 +8,7 @@ Aplikasi laravelnya  ada di sini<br>
     <li>Download dan ektrak file</li>
     <li>Jalankan Perintah <pre>npm update --force or --legacy-peer-deps</pre> di cmd</li>
 </ol>
+<br>
 <img src='skrinsut/1.png'>
 <img src='skrinsut/2.png'>
 <img src='skrinsut/3.png'>
