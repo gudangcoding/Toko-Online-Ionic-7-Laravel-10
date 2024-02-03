@@ -15,33 +15,22 @@
     <div class="form-container">
       <ion-item>
         <ion-label position="floating">Name</ion-label>
-        <ion-input></ion-input>
+        <ion-input type="text" placeholder="name" [(ngModel)]="name" ></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Email</ion-label>
-        <ion-input></ion-input>
+        <ion-input type="text" placeholder="email" [(ngModel)]="email"></ion-input>
       </ion-item>
-      <ion-item>
-        <ion-label position="floating">No Hp</ion-label>
-        <ion-input></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Alamat</ion-label>
-        <ion-textarea></ion-textarea>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Foto</ion-label>
-        <ion-input ></ion-input>
-      </ion-item>
+      
       <ion-item>
         <ion-label position="floating">Password</ion-label>
-        <ion-input type="password"></ion-input>
+        <ion-input type="password"  placeholder="Password" [(ngModel)]="password"></ion-input>
         <ion-icon name="eye" slot="end"></ion-icon>
       </ion-item>
 
       <ion-item>
         <ion-label position="floating">Konfrimasi Password</ion-label>
-        <ion-input type="password"></ion-input>
+        <ion-input type="password" placeholder="Confirm Password" [(ngModel)]="c_password"></ion-input>
         <ion-icon name="eye" slot="end"></ion-icon>
       </ion-item>
 
