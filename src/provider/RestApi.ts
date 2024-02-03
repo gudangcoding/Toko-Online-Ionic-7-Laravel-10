@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class RestApi {
-  server: string = 'https://dummyjson.com/';
+  server: string = 'https://simple-shop.app/api/v1/';
   gambar: string = 'https://kasir.app/public/';
 
   constructor(public http: HttpClient) {}

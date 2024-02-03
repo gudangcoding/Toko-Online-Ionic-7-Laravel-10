@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartService } from '../services/cart.service';
 import { Helper } from 'src/provider/Helper';
+import { RestApi } from 'src/provider/RestApi';
 
 @Component({
   selector: 'app-cart',
@@ -16,11 +17,13 @@ export class CartPage implements OnInit {
   total: any = 0;
   qty: any = 0;
   checkedCount = 1;
+  akandibayar:any[]=[];
 
   constructor(
     private cartService: CartService,
     private router: Router,
-    private util: Helper
+    private util: Helper,
+    private api : RestApi
   ) {
     this.products = cartService.getCart('cart');
     this.total = cartService.getCart('total');
@@ -200,6 +203,21 @@ export class CartPage implements OnInit {
         // update Local Storage
         localStorage.setItem('cart', JSON.stringify(storedItems));
       }
+    }
+  }
+
+  bayar(){
+    if (this.products) {
+     this.akandibayar = this.products.filter(product => product.checked === true);
+     let body = {
+       order : this.akandibayar,
+       total:this.total,
+       qty:this.qty
+     }
+     this.api.post(body,'order/store').subscribe((res)=>{
+      console.log(res);
+      
+     })
     }
   }
 }
