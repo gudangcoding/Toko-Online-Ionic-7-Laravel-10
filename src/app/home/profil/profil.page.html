@@ -18,9 +18,14 @@
   <h1 class="title">Profile</h1>
 
   <div class="profile-info">
+
+    <div class="profile-picture">
+      <img [src]="profilePhoto" *ngIf="profilePhoto" alt="Profile">
+    </div>
+
     <ion-item>
       <ion-label position="floating">Name</ion-label>
-      <ion-input value="Code Crafts"></ion-input>
+      <ion-input value="{{user.name}}"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Address Lane</ion-label>
@@ -36,11 +41,17 @@
     </ion-item>
     <ion-item>
       <ion-label position="floating">Email</ion-label>
-      <ion-input value="info@codecrafts.net"></ion-input>
+      <ion-input value="{{user.email}}"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Phone Number</ion-label>
-      <ion-input value="+94 775 580 646"></ion-input>
+      <ion-input value="081381830651"></ion-input>
     </ion-item>
+    <ion-button (click)="edit()" expand="block" color="success">
+      Edit
+    </ion-button>
+    <ion-button (click)="logout()" expand="block" color="danger">
+      Logout
+    </ion-button>
   </div>
 </ion-content>
