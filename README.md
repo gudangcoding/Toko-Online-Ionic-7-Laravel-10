@@ -3,8 +3,8 @@ Aplikasi laravelnya  ada di sini<br>
 <a href='https://github.com/gudangcoding/simple-shop'> Simple shop</a><br>
 <h3>cara install</h3>
 <ol>
-    <li>Install node js</li>
-    <li>Install ionic cli</li>
+    <li>Install node js <a href='https://nodejs.org/dist/v21.6.1/node-v21.6.1-x64.msi'>DOwnload</a></li>
+    <li>Install ionic clidi cmd <pre>npm i -g @ionic/cli</pre></li>
     <li>Jalankan Perintah <pre>npm update --force or --legacy-peer-deps</pre> di cmd</li>
 </ol>
 <img src='skrinsut/1.png'>
