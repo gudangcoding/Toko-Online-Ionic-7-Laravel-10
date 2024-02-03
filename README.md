@@ -5,7 +5,7 @@ Aplikasi laravelnya  ada di sini<br>
 <ol>
     <li>Install node js</li>
     <li>Install ionic cli</li>
-    <li>Jalankan Perintah npm update --force or --legacy-peer-deps di cmd</li>
+    <li>Jalankan Perintah <pre>npm update --force or --legacy-peer-deps</pre> di cmd</li>
 </ol>
 <img src='skrinsut/1.png'>
 <img src='skrinsut/2.png'>
