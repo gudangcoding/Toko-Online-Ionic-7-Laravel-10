@@ -1,4 +1,5 @@
-# Aplikasi laravelnya  ada di sini
+# Aplikasi toko online ionic 7 dan laravel
+Aplikasi laravelnya  ada di sini<br>
 <a href='https://github.com/gudangcoding/simple-shop'> Simple shop</a><br>
 <img src='skrinsut/1.png'>
 <img src='skrinsut/2.png'>
