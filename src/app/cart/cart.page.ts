@@ -12,13 +12,19 @@ export class CartPage implements OnInit {
   products: any[] = [];
   product: any = [];
   selectAll = false;
+  ceklis= false;
   total: any = 0;
   qty: any = 0;
+  checkedCount = 1;
 
-  constructor(private cartService: CartService, private router: Router,private util:Helper) {
+  constructor(
+    private cartService: CartService,
+    private router: Router,
+    private util: Helper
+  ) {
     this.products = cartService.getCart('cart');
     this.total = cartService.getCart('total');
-    
+
     console.log('Total atas : ', this.total);
   }
 
@@ -34,17 +40,38 @@ export class CartPage implements OnInit {
 
   incrementProduct(product: any) {
     this.cartService.tambahi('cart', product);
-    this.loadTotal();
+    this.calculate();
   }
 
   decrementProduct(product: any) {
     this.cartService.kurangi('cart', product);
-    this.loadTotal();
+    this.calculate();
   }
 
   loadTotal() {
     this.products = this.cartService.getCart('cart');
     this.total = this.cartService.getCart('total');
+    this.total = this.cartService.getCart('qty');
+  }
+
+  calculate(){
+    this.loadTotal();
+    if (this.products) {
+      this.checkedCount = this.products.filter((item) => item.checked).length;
+      // Hapus berdasarkan produk yang di ceklis
+      for (let i = 0; i <= this.checkedCount + 1; i++) {
+        // this.products.splice(i, 1);
+        this.total = this.products.reduce((sum: any, product: any) => {
+          return sum + (product.checked ? product.price * product.quantity : 0);
+        }, 0);
+        this.qty = this.products.reduce((sum: any, product: any) => {
+          return sum + (product.checked ? product.quantity : 0);
+        }, 0);
+        localStorage.setItem('total', JSON.stringify(this.total));
+        localStorage.setItem('qty', JSON.stringify(this.qty));
+      }
+    }
+   
   }
 
   checkAll() {
@@ -67,7 +94,6 @@ export class CartPage implements OnInit {
   }
 
   centangsatuan(productId: number): void {
-   
     const cartData = JSON.parse(localStorage.getItem('cart') ?? '{}');
     const ketemu = cartData.findIndex((item: any) => item.id === productId);
 
@@ -75,7 +101,7 @@ export class CartPage implements OnInit {
     if (ketemu) {
       for (let index = 0; index < cartData[productId].checked; index++) {
         this.total += cartData[index].price * cartData[index].quantity;
-        this.qty +=  cartData[index].quantity;
+        this.qty += cartData[index].quantity;
       }
       console.log('Hasil Tes ', cartData[productId].name);
       localStorage.setItem('cart', JSON.stringify(cartData));
@@ -112,12 +138,10 @@ export class CartPage implements OnInit {
 
   diceklis() {
     if (this.products) {
-      const jumlahdiceklis = this.products.filter(
-        (item) => item.checked
-      ).length;
-      console.log(jumlahdiceklis);
+      this.checkedCount = this.products.filter((item) => item.checked).length;
+
       // Hapus berdasarkan produk yang di ceklis
-      for (let i = 1; i <= jumlahdiceklis; i++) {
+      for (let i = 0; i <= this.checkedCount + 1; i++) {
         // this.products.splice(i, 1);
         this.total = this.products.reduce((sum: any, product: any) => {
           return sum + (product.checked ? product.price * product.quantity : 0);
@@ -125,23 +149,19 @@ export class CartPage implements OnInit {
         this.qty = this.products.reduce((sum: any, product: any) => {
           return sum + (product.checked ? product.quantity : 0);
         }, 0);
+        localStorage.setItem('total', JSON.stringify(this.total));
+        localStorage.setItem('qty', JSON.stringify(this.qty));
       }
       console.log(
         'JUmlah Diceklis ' +
-          jumlahdiceklis +
+          this.checkedCount +
           ' Jumlah ' +
           this.qty +
           ' Totalnya ' +
           this.total
       );
-      // Update Storage
-      // this.total = {
-      //   total: this.total,
-      //   qty: this.qty,
-      // };
+
       localStorage.setItem('cart', JSON.stringify(this.products));
-      localStorage.setItem('total', JSON.stringify(this.total));
-      localStorage.setItem('qty', JSON.stringify(this.qty));
     }
   }
 
