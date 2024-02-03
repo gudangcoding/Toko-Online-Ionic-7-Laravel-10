@@ -1,5 +1,5 @@
 Aplikasi laravelnya  ada di sini
-<a href='https://github.com/gudangcoding/simple-shop'> Simple shop</a>
+<a href='https://github.com/gudangcoding/simple-shop'> Simple shop</a><br>
 <img src='skrinsut/1.png'>
 <img src='skrinsut/2.png'>
 <img src='skrinsut/3.png'>
