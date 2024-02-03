@@ -67,3 +67,15 @@
     flex: 1;
     // margin: 10px; /* Gantilah dengan margin yang diinginkan */
   }
+
+  ion-icon {
+    position: relative;
+  
+    ion-badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      transform: translate(50%, -50%); /* Untuk membuat badge tepat di pojok atas */
+    }
+  }
+  
