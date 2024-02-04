@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CartService } from '../services/cart.service';
 import { Helper } from 'src/provider/Helper';
 import { RestApi } from 'src/provider/RestApi';
+import { Browser } from '@capacitor/browser';
 
 @Component({
   selector: 'app-cart',
@@ -222,7 +223,8 @@ export class CartPage implements OnInit {
         .subscribe((res:any) => {
           console.log(res);
           if (res.success==true) {
-            this.util.toastNotif('Order SUkses Dibuat');
+            // this.util.toastNotif('Order SUkses Dibuat');
+            Browser.open({ url: res.url});
           }
         });
     }
