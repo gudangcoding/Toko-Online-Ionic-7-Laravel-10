@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+declare var snap: any;
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.page.html',
@@ -11,5 +11,21 @@ export class CheckoutPage implements OnInit {
 
   ngOnInit() {
   }
-
+  
+  bayar(snapToken:any){
+    snap.pay(snapToken, {
+      onSuccess: (result: any) => {
+        console.log('Pembayaran berhasil:', result);
+        // Lakukan sesuatu setelah pembayaran berhasil
+      },
+      onPending: (result: any) => {
+        console.log('Pembayaran tertunda:', result);
+        // Lakukan sesuatu setelah pembayaran tertunda
+      },
+      onError: (result: any) => {
+        console.error('Pembayaran gagal:', result);
+        // Lakukan sesuatu setelah pembayaran gagal
+      },
+    });
+  }
 }
