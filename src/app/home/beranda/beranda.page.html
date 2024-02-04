@@ -75,16 +75,14 @@
       class="produk"
       size="6"
       *ngFor="let item of products ;let i=index"
-      
       (click)="detail(item?.id)"
-   
     >
       <div>
         <ion-card class="ion-no-padding ion-no-margin">
-          <img src="{{item?.thumbnail}}" alt="" width="300" height="200"/>
-          <p class="productTitle">{{item?.title}}</p>
+          <img [src]="item?.gambar" alt="" width="300" height="200"/>
+          <p class="productTitle">{{item?.nama_barang}}</p>
           <div class="box">
-            <p>{{item?.price | currency:'Rp '}}</p>
+            <p>{{item?.harga | currency:'Rp '}}</p>
           </div>
         </ion-card>
       </div>

@@ -15,7 +15,7 @@ export class BerandaPage implements OnInit {
   
   products: any[] = [];
   displayedProducts: any[] = [];
-  itemsPerPage: number = 10;
+  itemsPerPage: number = 12;
   currentPage: number = 1;
   response:any=[];
 
@@ -26,24 +26,24 @@ export class BerandaPage implements OnInit {
     private util : Helper
   ) {
     // this.loadData(null);
-    this.loadMoreData();
+    // this.loadMoreData();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.loadData(null);
+  }
 
-  private apiUrl = 'https://dummyjson.com/products';
-  getProduct(page: number) {
-    let hasil = this.apiUrl + '?page=' + page;
-    // console.log(hasil);
-    return this.http.get(`${this.apiUrl}?page=${page}`);
+
+  getProduct(page: number) { 
+    return this.api.get(`barang?page=${page}`);
   }
 
   loadData(event: any) {
     this.util.showLoading();
-    // console.log('Hasil Event : ',event);
+    console.log('Hasil Event : ',event);
     this.getProduct(this.currentPage).subscribe((res: any) => {
       this.util.dismissLoading();
-      this.products = this.products.concat(res.products);
+      this.products = this.products.concat(res.data.data);
       console.log('event ',event);
       
       if (event) {
@@ -60,14 +60,15 @@ export class BerandaPage implements OnInit {
   }
 
   async loadMoreData(event?: any) {
-    const apiUrl = 'https://dummyjson.com/products';
+    this.util.showLoading();
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
 
     try {
       // this.response = await this.http.get<any[]>(apiUrl).toPromise();
-      this.http.get(apiUrl).subscribe((res:any)=>{
-        this.response = res.products;
+      this.api.get('barang').subscribe((res:any)=>{
+        this.util.dismissLoading();
+        this.response = res.data.data;
         this.products = this.response.slice(startIndex, endIndex);
         this.displayedProducts = [...this.displayedProducts, ...this.products];
       });

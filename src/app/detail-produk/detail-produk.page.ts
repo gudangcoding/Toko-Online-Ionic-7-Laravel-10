@@ -2,9 +2,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Animation, AnimationController } from '@ionic/angular';
 import { RestApi } from 'src/provider/RestApi';
 import { CartService } from '../services/cart.service';
+import { Helper } from 'src/provider/Helper';
 
 @Component({
   selector: 'app-detail-produk',
@@ -20,22 +20,21 @@ export class DetailProdukPage implements OnInit {
 
   @ViewChild('.colors') colors: any = ElementRef;
   @ViewChild('.sizes') sizes: any = ElementRef;
+
   product: any;
   constructor(
-    private animatioCntrl: AnimationController,
     private route: ActivatedRoute,
     private api: RestApi,
-    private http: HttpClient,
-    private cart: CartService,
+    private util: Helper,
     private router: Router,
-    private cartService : CartService
-
+    private cartService: CartService
   ) {
     this.route.queryParams.subscribe((params: any) => {
       this.productId = params.id;
       console.log(this.productId);
-      
+
     });
+    
   }
 
   ngOnInit() {
@@ -43,46 +42,48 @@ export class DetailProdukPage implements OnInit {
   }
 
   getProduct() {
-    this.http.get('https://dummyjson.com/products/'+this.productId).subscribe((res: any) => {
+    this.api.get('barang/detail/' + this.productId).subscribe((res: any) => {
       console.log(res);
-      this.products = res;
+      this.products = res.data;
     });
   }
 
   isWishlistAdded: boolean = false;
-  addToWishlist(productid:number){
+
+  addToWishlist(productid: number) {
     this.isWishlistAdded = !this.isWishlistAdded;
     console.log(this.isWishlistAdded);
-    if (this.isWishlistAdded==true) {
+    if (this.isWishlistAdded == true) {
       this.product = {
         id: this.products.id,
-        name: this.products.title,
-        price: this.products.price,
-        gambar: this.products.thumbnail,
+        name: this.products.nama_barang,
+        price: this.products.harga,
+        gambar: this.products.gambar,
       };
-      this.cartService.addToCart('whistlist',this.product);
-    }else{
-        this.removeProduct(productid);
+      this.cartService.addToCart('whistlist', this.product);
+      this.util.toastNotif('Produk Berhasil ditambahkan Ke whislist');
+    } else {
+      this.removeProduct(productid);
     }
-    
   }
 
   removeProduct(productId: number) {
-    const products =  JSON.parse(localStorage.getItem('whistlist') ?? '{}');
+    const products = JSON.parse(localStorage.getItem('whistlist') ?? '{}');
     const ketemu = products.filter((product: any) => product.id !== productId);
-    console.log('ketemu : ',ketemu);
+    console.log('ketemu : ', ketemu);
     localStorage.setItem('whistlist', ketemu);
+    this.util.toastNotif('Produk Berhasil dihapus dari whislist');
   }
 
   addToCart() {
     this.product = {
       id: this.products.id,
-      name: this.products.title,
-      price: this.products.price,
-      gambar: this.products.thumbnail,
+      name: this.products.nama_barang,
+      price: this.products.harga,
+      gambar: this.products.gambar,
     };
-    this.cartService.addToCart('cart',this.product);
-    // this.router.navigateByUrl('/home/cart');
+    this.cartService.addToCart('cart', this.product);
+    this.util.toastNotif('Produk Berhasil ditambahkan Ke keranjang');
   }
 
   buy() {
@@ -93,47 +94,12 @@ export class DetailProdukPage implements OnInit {
       gambar: this.products.thumbnail,
       quantity: 1,
     };
-    this.cartService.addToCart('cart',this.product);
+    this.cartService.addToCart('cart', this.product);
     this.router.navigateByUrl('/home/cart');
   }
 
   segmentChanged(e: any) {
     this.activeVariation = e.detail.value;
-    if (this.activeVariation == 'color') {
-      this.animatioCntrl
-        .create()
-        .addElement(this.colors.nativeElement)
-        .duration(500)
-        .iterations(1)
-        .fromTo('transform', 'translateX(0px)', 'translateX(100%)')
-        .fromTo('opacity', '1', '0.2')
-        .play();
-      this.animatioCntrl
-        .create()
-        .addElement(this.colors.nativeElement)
-        .duration(500)
-        .iterations(1)
-        .fromTo('transform', 'translateX(-100%)', 'translateX(0)')
-        .fromTo('opacity', '0.2', '1')
-        .play();
-    } else {
-      this.animatioCntrl
-        .create()
-        .addElement(this.sizes.nativeElement)
-        .duration(500)
-        .iterations(1)
-        .fromTo('transform', 'translateX(100%)', 'translateX(0)')
-        .fromTo('opacity', '0.2', '1')
-        .play();
-      this.animatioCntrl
-        .create()
-        .addElement(this.colors.nativeElement)
-        .duration(500)
-        .iterations(1)
-        .fromTo('transform', 'translateX(0px)', 'translateX(-100%)')
-        .fromTo('opacity', '1', '0.2')
-        .play();
-    }
   }
 
   changeSize(size: number) {

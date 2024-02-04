@@ -61,16 +61,16 @@
                           ...
                         })
                         ... -->
-        <swiper-slide *ngFor="let item of products.images ;let i=index">
+        <swiper-slide *ngFor="let item of products.gambar2 ;let i=index">
           <img src="{{item}}" alt="" width="500" height="300" />
         </swiper-slide>
       </swiper-container>
 
       <div class="product-info">
         <div class="satu">
-          <h1 class="item-name">{{products.title}}</h1>
+          <h1 class="item-name">{{products.nama_barang}}</h1>
           <h4 class="price">
-            {{products?.price | currency:'Rp '}}
+            {{products?.harga | currency:'Rp '}}
             <!-- <span class="real-price">Harga Diskon {{products?.price | currency:'Rp '}}</span> -->
           </h4>
         </div>
@@ -113,7 +113,7 @@
   <div class="description">
     <h5>Description</h5>
 
-    <p>{{products.description}}</p>
+    <p>{{products.keterangan}}</p>
   </div>
 
   <div class="seperator">
@@ -121,11 +121,11 @@
   </div>
 
   <div class="variation">
-    <ion-segment (ionChange)="segmentChanged($event)" value="size">
-      <ion-segment-button value="size">
+    <ion-segment (ionChange)="segmentChanged($event)" value="size" color="success">
+      <ion-segment-button value="size" >
         <ion-label>Select Size</ion-label>
       </ion-segment-button>
-      <ion-segment-button value="color">
+      <ion-segment-button value="color" checked>
         <ion-label>Select Color</ion-label>
       </ion-segment-button>
     </ion-segment>
