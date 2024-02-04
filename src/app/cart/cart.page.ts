@@ -13,21 +13,22 @@ export class CartPage implements OnInit {
   products: any[] = [];
   product: any = [];
   selectAll = false;
-  ceklis= false;
+  ceklis = false;
   total: any = 0;
   qty: any = 0;
   checkedCount = 1;
-  akandibayar:any[]=[];
-
+  akandibayar: any[] = [];
+  user: any;
   constructor(
     private cartService: CartService,
     private router: Router,
     private util: Helper,
-    private api : RestApi
+    private api: RestApi
   ) {
     this.products = cartService.getCart('cart');
     this.total = cartService.getCart('total');
     this.total = cartService.getCart('qty');
+    this.user = cartService.getCart('member');
     console.log('Total atas : ', this.total);
   }
 
@@ -58,7 +59,7 @@ export class CartPage implements OnInit {
     this.qty = this.cartService.getCart('qty');
   }
 
-  calculate(){  
+  calculate() {
     if (this.products) {
       this.checkedCount = this.products.filter((item) => item.checked).length;
       // Hapus berdasarkan produk yang di ceklis
@@ -75,7 +76,6 @@ export class CartPage implements OnInit {
         localStorage.setItem('qty', JSON.stringify(this.qty));
       }
     }
-   
   }
 
   checkAll() {
@@ -206,18 +206,25 @@ export class CartPage implements OnInit {
     }
   }
 
-  bayar(){
+  bayar() {
     if (this.products) {
-     this.akandibayar = this.products.filter(product => product.checked === true);
-     let body = {
-       order : this.akandibayar,
-       total:this.total,
-       qty:this.qty
-     }
-     this.api.post(body,'order/store').subscribe((res)=>{
-      console.log(res);
-      
-     })
+      this.akandibayar = this.products.filter(
+        (product) => product.checked === true
+      );
+      let body = {
+        user_id: this.user.id,
+        items: this.akandibayar,
+        jumlah_harga: this.total,
+        qty: this.qty,
+      };
+      this.api
+        .postWithToken(body, 'order/store', this.user.token)
+        .subscribe((res:any) => {
+          console.log(res);
+          if (res.success==true) {
+            this.util.toastNotif('Order SUkses Dibuat');
+          }
+        });
     }
   }
 }
