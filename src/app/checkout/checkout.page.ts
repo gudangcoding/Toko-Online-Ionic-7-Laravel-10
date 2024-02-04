@@ -6,13 +6,13 @@ declare var snap: any;
   styleUrls: ['./checkout.page.scss'],
 })
 export class CheckoutPage implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit() {
-  }
+  ngOnInit() {}
   
-  bayar(snapToken:any){
+  //url testing
+  //https://simulator.sandbox.midtrans.com/
+  bayar(snapToken: any) {
     snap.pay(snapToken, {
       onSuccess: (result: any) => {
         console.log('Pembayaran berhasil:', result);
