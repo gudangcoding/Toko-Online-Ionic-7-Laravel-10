@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { RestApi } from 'src/provider/RestApi';
 
 @Component({
   selector: 'app-cari',
@@ -13,7 +14,12 @@ export class CariPage implements OnInit {
   filteredProducts: any[] = [];
   searchTerm: string = '';
 
-  constructor(private http: HttpClient,private router:Router, private route: ActivatedRoute) {
+  constructor(
+    private http: HttpClient,
+    private router:Router, 
+    private route: ActivatedRoute,
+    private api: RestApi,
+    ) {
     this.route.queryParams.subscribe((params: any) => {
       this.searchTerm = params.cari;
       console.log(this.searchTerm);
@@ -25,11 +31,11 @@ export class CariPage implements OnInit {
   }
 
   onSearchChange(event: any) {
-    this.http
-      .get('https://dummyjson.com/products/search?q=' + event)
+    this.api
+      .get('barang/cari?q=' + event)
       .subscribe((res: any) => {
         console.log(res.products);
-        this.products = res.products;
+        this.products = res.data;
       });
   }
 

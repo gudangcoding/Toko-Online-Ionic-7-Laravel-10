@@ -30,9 +30,9 @@
 
   <ion-row class="favorite-items" >
     <ion-col size="6" class="ion-text-left padding-left0" *ngFor="let a of products" (click)="detail(a.id)">
-      <img src="{{a.thumbnail}}" width="300" height="200"/>
-      <p>{{a.price | currency:'Rp '}}</p>
-      <h6>{{a.title}}</h6>
+      <img src="{{a.gambar}}" width="300" height="200"/>
+      <p>{{a.harga | currency:'Rp '}}</p>
+      <h6>{{a.nama_barang}}</h6>
     </ion-col>
     
   </ion-row>

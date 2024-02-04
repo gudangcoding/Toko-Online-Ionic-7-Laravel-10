@@ -30,7 +30,7 @@ export class CartPage implements OnInit {
     this.total = cartService.getCart('total');
     this.total = cartService.getCart('qty');
     this.user = cartService.getCart('member');
-    console.log('Total atas : ', this.total);
+    console.log('Total atas : ', this.user);
   }
 
   ngOnInit() {
@@ -223,6 +223,7 @@ export class CartPage implements OnInit {
         .subscribe((res:any) => {
           console.log(res);
           if (res.success==true) {
+            this.delAll();
             // this.util.toastNotif('Order SUkses Dibuat');
             Browser.open({ url: res.url});
           }
