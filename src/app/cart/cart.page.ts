@@ -224,6 +224,8 @@ export class CartPage implements OnInit {
           console.log(res);
           if (res.success==true) {
             this.delAll();
+            this.util.alertNotif('Berhasil Diorder, SIlahkan lakukan pembayaran');
+            this.router.navigateByUrl('home/history');
             // this.util.toastNotif('Order SUkses Dibuat');
             Browser.open({ url: res.url});
           }

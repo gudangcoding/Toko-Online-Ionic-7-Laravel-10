@@ -26,6 +26,7 @@
 </ion-header>
 
 <ion-content>
+  
   <ion-segment (ionChange)="segmentChanged($event)">
     <ion-segment-button value="proses" checked> Proses </ion-segment-button>
     <ion-segment-button value="komplit"> Komplit </ion-segment-button>
@@ -33,23 +34,18 @@
 
   <!-- Isi konten berdasarkan segmen yang dipilih -->
   <ion-list *ngIf="selectedSegment === 'proses'">
-    <h3 class="title">Order Sedang Di Proses</h3>
+  
 
-    <div class="order-items">
+    <div class="order-items" *ngFor="let item of products ;let i=index">
       <ion-card mode="ios">
         <ion-card-content>
-          <div class="item-img">
-            <img src="../../../assets/cart/cart1.png" />
-          </div>
-
+        
           <div class="item-info">
-            <p>Women t-shirt</p>
-            <p>Lotto.LTD</p>
-            <p>$34.00</p>
+            <p>{{item.nama_barang}}</p>
+            <p>{{item.tanggal}}</p>
+            <p>{{item.jumlah_harga | currency:'Rp '}}</p>
 
-            <ion-button expand="block" color="warning" class="main-button"
-              >Sedang Diproses</ion-button
-            >
+            <ion-button (click)="bayar(item.token_midtrans)" expand="block" color="warning" class="main-button">Bayar Sekarang</ion-button>
           </div>
         </ion-card-content>
       </ion-card>
@@ -69,7 +65,7 @@
 
   <ion-list *ngIf="selectedSegment === 'komplit'">
     <div class="order-items">
-      <h3 class="title">Order Selesai</h3>
+      
       <ion-card mode="ios">
         <ion-card-content>
           <div class="item-img">
