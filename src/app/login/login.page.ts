@@ -32,7 +32,7 @@ password:any;
       this.sesi.set('member',res.data);
     
       if (res.success == true) {
-        this.router.navigate(['/tabs/home'],{replaceUrl:true});
+        this.router.navigate(['/beranda/home'],{replaceUrl:true});
       } else {
         this.util.alertNotif('Login Gagal, Cek Email dan Password');
       }
