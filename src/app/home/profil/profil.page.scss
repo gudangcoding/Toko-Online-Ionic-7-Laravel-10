@@ -46,3 +46,16 @@ ion-content {
       border-radius: 50%;
     }
   }
+
+  ion-avatar {
+    position: relative;
+  }
+  
+  ion-icon {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-size: 20px; /* Sesuaikan ukuran ikon sesuai kebutuhan Anda */
+    color: white; /* Sesuaikan warna ikon sesuai kebutuhan Anda */
+    cursor: pointer;
+  }

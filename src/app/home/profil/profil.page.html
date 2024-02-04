@@ -29,35 +29,34 @@
   <h1 class="title">Profile</h1>
 
   <div class="profile-info">
+  
+    <div class="profile-picture" (click)="takePicture()">
+      <img src="{{profil.foto}}"  alt="Profile">
+      <ion-icon name="camera-outline" (click)="takePicture()"></ion-icon>
+    </div>
 
-    <div class="profile-picture">
-      <img [src]="profilePhoto" *ngIf="profilePhoto" alt="Profile">
+    <div class="profile-picture" (click)="takePicture()">
+      <img [src]="profilePhoto" *ngIf="!profil.foto" alt="Profile">
     </div>
 
     <ion-item>
-      <ion-label position="floating">Name</ion-label>
-      <ion-input value="{{user.name}}"></ion-input>
+      <ion-label position="floating">Nama</ion-label>
+      <ion-input value="{{profil.name}}"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Address Lane</ion-label>
-      <ion-input value="37/6 A"></ion-input>
+      <ion-label position="floating">Alamat</ion-label>
+      <ion-input value="{{profil.alamat}}"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">City</ion-label>
-      <ion-input value="Moratuwa"></ion-input>
+      <ion-label position="floating">No Hp</ion-label>
+      <ion-input value="{{profil.nohp}}"></ion-input>
     </ion-item>
-    <ion-item>
-      <ion-label position="floating">Gender</ion-label>
-      <ion-input value="Male"></ion-input>
-    </ion-item>
+
     <ion-item>
       <ion-label position="floating">Email</ion-label>
-      <ion-input value="{{user.email}}"></ion-input>
+      <ion-input value="{{profil.email}}"></ion-input>
     </ion-item>
-    <ion-item>
-      <ion-label position="floating">Phone Number</ion-label>
-      <ion-input value="081381830651"></ion-input>
-    </ion-item>
+ 
     <ion-button (click)="edit()" expand="block" color="success">
       Edit
     </ion-button>
