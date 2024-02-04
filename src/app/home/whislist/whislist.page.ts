@@ -9,6 +9,7 @@ import { Helper } from 'src/provider/Helper';
   styleUrls: ['./whislist.page.scss'],
 })
 export class WhislistPage implements OnInit {
+
   whistlist: any[] = [];
   hasil: any[] = [];
   searchTerm:any="";
@@ -19,6 +20,7 @@ export class WhislistPage implements OnInit {
   }
 
   ngOnInit() {
+    this.whistlist = this.cartService.getCart('whistlist');
   }
 
   searchByName(searchTerm: any) {

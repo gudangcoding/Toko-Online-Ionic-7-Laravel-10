@@ -1,18 +1,25 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="success">
     <ion-buttons slot="start">
-      <ion-buttons
-        class="backbtn"
-        routerLink="/home/beranda"
-        routerDirection="back"
-      >
-        <img src="../../../assets/back-dark.svg" />
-      </ion-buttons>
+      <span>&nbsp;</span>
+      <ion-icon name="person-circle-outline"></ion-icon>
+      <span>&nbsp;</span>
+      Halo Annas
     </ion-buttons>
-    <ion-title>Keranjang</ion-title>
     <ion-buttons slot="end">
-      <ion-button class="notification">
-        <ion-icon name="notifications-outline" color="dark"></ion-icon>
+      <ion-button class="notification" routerLink="/cart">
+        <ion-icon name="mail-outline"></ion-icon>
+        <ion-badge color="danger">3</ion-badge>
+        <span></span>
+      </ion-button>
+      <ion-button class="notification" routerLink="/cart">
+        <ion-icon name="cart-outline"></ion-icon>
+        <ion-badge color="danger">3</ion-badge>
+        <span>&nbsp;</span>
+      </ion-button>
+      <ion-button class="filter">
+        <ion-icon name="notifications-outline"></ion-icon>
+        <ion-badge color="danger">3</ion-badge>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
